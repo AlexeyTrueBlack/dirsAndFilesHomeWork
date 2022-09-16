@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println();
-        String products[] = {"Молоко", "Крупа", "Чай", "Сахар"};
+        String products[][] = {{"Молоко", "100"}, {"Крупа", "50"}, {"Чай", "80"}, {"Сахар", "60"}};
         int prices[] = {100, 50, 80, 60};
         int productsCount[] = new int[products.length]; // накопительный счетчик продуктов одного типа в корзине
 

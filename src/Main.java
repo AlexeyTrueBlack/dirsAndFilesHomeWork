@@ -2,31 +2,32 @@ import basket.Basket;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.Scanner;
 
 public class Main {
+    final static String[][] PRODUCTS = {{"Молоко", "100"}, {"Крупа", "50"}, {"Чай", "80"}, {"Сахар", "60"}};
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String[][] products = {{"Молоко", "100"}, {"Крупа", "50"}, {"Чай", "80"}, {"Сахар", "60"}};
-        Basket basket = new Basket(products);
+        Basket basket = new Basket(PRODUCTS);
         File basketTxt = new File("basket.txt");
         if (basketTxt.exists()) {
-            String[][] strings = Basket.loadFromFile(basketTxt);
-            for (int i = 0; i < products.length; i++) {
-                for (int j = 0; j < strings.length; j++) {
-                    if (strings[j][0].equals(products[i][0])) {
-                        basket.addToCart(i, Integer.parseInt(strings[j][1]));
+            String[][] loadedBasket = Basket.loadFromFile(basketTxt);
+            for (int i = 0; i < PRODUCTS.length; i++) {
+                for (int j = 0; j < loadedBasket.length; j++) {
+                    if (loadedBasket[j][0].equals(PRODUCTS[i][0])) {
+                        basket.addToCart(i, Integer.parseInt(loadedBasket[j][1]));
                     }
                 }
             }
+            basket.printCart();
+        } else {
+            System.out.println("Ранее созданная корзина отсутствует, будет формироваться новая");
         }
-        else System.out.println("Ранее созданная корзина отсутствует, будет формироваться новая");
         System.out.println();
-        int prices[] = {100, 50, 80, 60};
-        int productsCount[] = new int[products.length]; // накопительный счетчик продуктов одного типа в корзине
         while (true) {
-            basket.printBasket();
+            printList();
             System.out.println("Выберите номер продукта из списка и количество через пробел. " +
                     "Для завершения программы и вывода итогов введите end:");
             String choice = scanner.nextLine();
@@ -49,20 +50,27 @@ public class Main {
                 System.out.println("Вы ввели что-то совсем непонятное");
                 continue;
             }
-            if (productNumber < 0 || productNumber > products.length) {
+            if (productNumber < 0 || productNumber > PRODUCTS.length) {
                 System.out.println("Выберите порядковый номер в соответствии с представленным списком");
                 continue;
             } else if (productCount < 0) {
-                System.out.println("Мы не можем положить в корзину " + productCount + " " + products[productNumber]);
+                System.out.println("Мы не можем положить в корзину отрицательное количество товара");
                 continue;
             } else if (productCount == 0) {
                 System.out.println("Вы ничего не положили в корзину");
-                //continue;
-                productsCount[productNumber] = 0;
+                continue;
             }
+            System.out.println("Вы положили в корзину: " + PRODUCTS[productNumber][0] + ", " + productCount + " шт");
             basket.addToCart(productNumber, productCount);
             basket.saveTxt(basketTxt);
         }
         basket.printCart();
+    }
+
+    static void printList () {
+        System.out.println("Наименование товара, цена\n");
+        for (int i = 0; i < PRODUCTS.length; i++) {
+            System.out.println(PRODUCTS[i][0] + ", " + PRODUCTS[i][1] + " руб/шт");
+        }
     }
 }

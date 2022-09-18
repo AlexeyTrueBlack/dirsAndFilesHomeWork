@@ -1,9 +1,7 @@
 package basket;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Basket {
 
@@ -17,23 +15,22 @@ public class Basket {
         this.itemsInCart = new int[productsList.length];
     }
 
-    public void printBasket () {
-        System.out.println("Перечень товаров к покупке:\n");
-        if (productsList.length != 0) {
-            for (int i = 0; i < productsList.length; i++) {
-                System.out.println(productsList[i][0] + ", цена: " + productsList[i][1] + " руб/шт.");
-            }
-        }
-    }
+//    public void printBasket () {
+//        System.out.println("Перечень товаров к покупке:\n");
+//        if (productsList.length != 0) {
+//            for (int i = 0; i < productsList.length; i++) {
+//                System.out.println(productsList[i][0] + ", цена: " + productsList[i][1] + " руб/шт.");
+//            }
+//        }
+//    }
 
     public void addToCart(int productNum, int amount) {
-        itemsInCart[productNum] += amount;
-        System.out.println("Вы положили в корзину " + productsList[productNum][0] + ", " + amount + " шт.");
-        bill += Integer.parseInt(productsList[productNum][1]) * amount;
+            itemsInCart[productNum] += amount;
+            bill += Integer.parseInt(productsList[productNum][1]) * amount;
     }
 
     public void printCart() {
-        System.out.println("Итоговая корзина покупок:\n");
+        System.out.println("Ваша корзина покупок:");
         for (int i = 0; i < itemsInCart.length; i++) {
             if (itemsInCart[i] != 0) {
                 System.out.println(productsList[i][0] + ", " + productsList[i][1] + " руб/шт: "
@@ -76,15 +73,15 @@ public class Basket {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        // я не вспомню как создавался этот пиздец...
+        // Сначала разбиваем файл на массив построчно
         String[] splitLines = dataFromFile.split("\\n");
+        // создаем двумерный массив для записи наименований и цен из файла
         String[][] productsListFromFile = new String[splitLines.length][2];
         for (int i = 0; i < splitLines.length; i++) {
             String[] split = splitLines[i].split(": |, | ");
             productsListFromFile[i][0] = split[0];
             productsListFromFile[i][1] = split[1];
         }
-        System.out.println(Arrays.deepToString(productsListFromFile));
         return productsListFromFile;
     }
 }

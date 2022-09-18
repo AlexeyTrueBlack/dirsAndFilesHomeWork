@@ -32,9 +32,9 @@ public class Basket implements Serializable {
         System.out.println("Общая стоимость: " + bill);
     }
 
-    public void saveBin (File file) {
+    public void saveBin(File file) {
         try (FileOutputStream outputStream = new FileOutputStream(file);
-        ObjectOutputStream objOutStream = new ObjectOutputStream(outputStream)){
+             ObjectOutputStream objOutStream = new ObjectOutputStream(outputStream)) {
             objOutStream.writeObject(this);
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
@@ -43,10 +43,10 @@ public class Basket implements Serializable {
         }
     }
 
-    public static Basket loadFromBinFile (File file) {
+    public static Basket loadFromBinFile(File file) {
         Basket basket = null;
         try (FileInputStream inputStream = new FileInputStream(file);
-        ObjectInputStream objInpStream = new ObjectInputStream(inputStream)) {
+             ObjectInputStream objInpStream = new ObjectInputStream(inputStream)) {
             basket = (Basket) objInpStream.readObject();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

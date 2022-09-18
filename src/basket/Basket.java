@@ -1,7 +1,6 @@
 package basket;
 
 import java.io.*;
-import java.util.Arrays;
 
 public class Basket {
 
@@ -15,18 +14,9 @@ public class Basket {
         this.itemsInCart = new int[productsList.length];
     }
 
-//    public void printBasket () {
-//        System.out.println("Перечень товаров к покупке:\n");
-//        if (productsList.length != 0) {
-//            for (int i = 0; i < productsList.length; i++) {
-//                System.out.println(productsList[i][0] + ", цена: " + productsList[i][1] + " руб/шт.");
-//            }
-//        }
-//    }
-
     public void addToCart(int productNum, int amount) {
-            itemsInCart[productNum] += amount;
-            bill += Integer.parseInt(productsList[productNum][1]) * amount;
+        itemsInCart[productNum] += amount;
+        bill += Integer.parseInt(productsList[productNum][1]) * amount;
     }
 
     public void printCart() {

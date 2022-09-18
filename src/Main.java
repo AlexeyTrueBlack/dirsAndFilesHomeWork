@@ -1,8 +1,6 @@
 import basket.Basket;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.BitSet;
 import java.util.Scanner;
 
 public class Main {

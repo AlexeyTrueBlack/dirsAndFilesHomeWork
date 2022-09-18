@@ -51,7 +51,7 @@ public class Basket {
 
     public static String[][] loadFromFile(File textFile) {
         String dataFromFile = "";
-        try (BufferedReader loadCartFromFile = new BufferedReader(new FileReader(textFile))){
+        try (BufferedReader loadCartFromFile = new BufferedReader(new FileReader(textFile))) {
             // заводим переменную для чтения из файла, т.к. при упоминании метода в скобках
             // цикла / ифа он выполняется,
             // итого без переменной у нас каждая вторая итерация цикла останется без данных

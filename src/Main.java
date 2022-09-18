@@ -65,7 +65,7 @@ public class Main {
         basket.printCart();
     }
 
-    static void printList () {
+    static void printList() {
         System.out.println("Наименование товара, цена\n");
         for (int i = 0; i < PRODUCTS.length; i++) {
             System.out.println(PRODUCTS[i][0] + ", " + PRODUCTS[i][1] + " руб/шт");

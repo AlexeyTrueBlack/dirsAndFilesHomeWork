@@ -2,8 +2,10 @@ package org.example;
 
 
 import org.example.basket.Basket;
+import org.example.log.ClientLog;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 public class Main {
@@ -12,11 +14,22 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Basket basket = new Basket(PRODUCTS);
-        File basketBin = new File("basket.bin");
-        if (basketBin.exists()) {
-            basket = Basket.loadFromBinFile(basketBin);
+        File basketTxt = new File("basket.json");
+        File operationsLog = new File("log.csv");
+        ClientLog log = new ClientLog();
+        if (basketTxt.exists()) {
+            String[][] loadedBasket = Basket.loadFromJSON(basketTxt);
+            for (int i = 0; i < PRODUCTS.length; i++) {
+                for (int j = 0; j < loadedBasket.length; j++) {
+                    if (loadedBasket[j][0].equals(PRODUCTS[i][0])) {
+                        basket.addToCart(i, Integer.parseInt(loadedBasket[j][1]));
+                    }
+                }
+            }
             basket.printCart();
-        } else System.out.println("Файл корзины не найден, будет формироваться новая");
+        } else {
+            System.out.println("Ранее созданная корзина отсутствует, будет формироваться новая");
+        }
         System.out.println();
         while (true) {
             printList();
@@ -38,6 +51,7 @@ public class Main {
             try {
                 productNumber = Integer.parseInt(parts[0]) - 1; //порядковый номер продукта в массиве,
                 productCount = Integer.parseInt(parts[1]); // количество единиц данного продукта
+                log.log(productNumber, productCount);
             } catch (NumberFormatException e) {
                 System.out.println("Вы ввели что-то совсем непонятное");
                 continue;
@@ -54,9 +68,11 @@ public class Main {
             }
             System.out.println("Вы положили в корзину: " + PRODUCTS[productNumber][0] + ", " + productCount + " шт");
             basket.addToCart(productNumber, productCount);
-            basket.saveBin(basketBin);
+            basket.saveJSON(basketTxt);
         }
         basket.printCart();
+        log.printLog();
+        log.exportAsCSV(operationsLog);
     }
 
     static void printList() {

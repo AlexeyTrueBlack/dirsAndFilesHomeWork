@@ -8,8 +8,6 @@ import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.io.FileWriter;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -39,19 +37,19 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("isBasketLoadEnabled " + isBasketLoadEnabled);
-        System.out.println("basketLoadFromFileName " + basketLoadFromFileName);
-        System.out.println("basketLoadFormat " + basketLoadFormat);
-        System.out.println("isBasketSaveEnabled " + isBasketSaveEnabled);
-        System.out.println("basketSaveToFileName " + basketSaveToFileName);
-        System.out.println("basketSaveFormat " + basketSaveFormat);
-        System.out.println("isLogEnabled " + isLogEnabled);
-        System.out.println("logFileName " + logFileName);
+//        System.out.println("isBasketLoadEnabled " + isBasketLoadEnabled);
+//        System.out.println("basketLoadFromFileName " + basketLoadFromFileName);
+//        System.out.println("basketLoadFormat " + basketLoadFormat);
+//        System.out.println("isBasketSaveEnabled " + isBasketSaveEnabled);
+//        System.out.println("basketSaveToFileName " + basketSaveToFileName);
+//        System.out.println("basketSaveFormat " + basketSaveFormat);
+//        System.out.println("isLogEnabled " + isLogEnabled);
+//        System.out.println("logFileName " + logFileName);
         Scanner scanner = new Scanner(System.in);
         Basket basket = new Basket(PRODUCTS);
         // Не знаю зачем в названии файла он указан с расширением, если далее идет строка с этим расширением,
         // посчитал правильным отбросить расширение из названия и добавить расширение из соответствующего поля
-        // иначе не вижу смысла в нем, не искать же файл basket.json.txt например?
+        // иначе не вижу смысла в нем, не искать же файл basket.json.txt например? или basket.json.json...
         String basketLoadFileName = basketLoadFromFileName.split("\\.")[0] + "." + basketLoadFormat;
         String basketSaveFileName = basketSaveToFileName.split("\\.")[0] + "." + basketSaveFormat;
         File basketSaveFile = new File(basketSaveFileName);

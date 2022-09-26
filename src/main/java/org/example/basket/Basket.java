@@ -69,9 +69,6 @@ public class Basket implements Serializable {
             e.printStackTrace();
         }
         String [] splitLines = jsonLine.split("\",\"");
-        if (splitLines.length == 0) {
-            throw new ArrayIndexOutOfBoundsException("Файл корзины пуст");
-        }
         String[][] productsListFromFile = new String[splitLines.length][2];
         for (int i = 0; i < splitLines.length; i++) {
             String [] split = splitLines[i].replaceAll("\"|\\{|}", "").split(",|:| ");

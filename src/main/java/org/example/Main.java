@@ -37,7 +37,7 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-//        System.out.println("isBasketLoadEnabled " + isBasketLoadEnabled);
+        System.out.println("isBasketLoadEnabled " + isBasketLoadEnabled);
 //        System.out.println("basketLoadFromFileName " + basketLoadFromFileName);
 //        System.out.println("basketLoadFormat " + basketLoadFormat);
 //        System.out.println("isBasketSaveEnabled " + isBasketSaveEnabled);

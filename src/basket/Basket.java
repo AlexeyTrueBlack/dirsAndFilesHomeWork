@@ -36,8 +36,6 @@ public class Basket implements Serializable {
         try (FileOutputStream outputStream = new FileOutputStream(file);
              ObjectOutputStream objOutStream = new ObjectOutputStream(outputStream)) {
             objOutStream.writeObject(this);
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -48,11 +46,7 @@ public class Basket implements Serializable {
         try (FileInputStream inputStream = new FileInputStream(file);
              ObjectInputStream objInpStream = new ObjectInputStream(inputStream)) {
             basket = (Basket) objInpStream.readObject();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
         return basket;

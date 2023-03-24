@@ -8,6 +8,8 @@ public class Basket {
     protected int[] itemsInCart; // массив количества каждого товара в корзине
     protected int bill = 0;
 
+    public Basket() {
+    }
 
     public Basket(String[][] productsList) {
         this.productsList = productsList;
@@ -20,14 +22,14 @@ public class Basket {
     }
 
     public void printCart() {
-        System.out.println("Ваша корзина покупок:");
+        System.out.println("Your cart:");
         for (int i = 0; i < itemsInCart.length; i++) {
             if (itemsInCart[i] != 0) {
-                System.out.println(productsList[i][0] + ", " + productsList[i][1] + " руб/шт: "
-                        + itemsInCart[i] + " шт, " + (Integer.parseInt(productsList[i][1]) * itemsInCart[i]) + " руб");
+                System.out.println(productsList[i][0] + ", " + productsList[i][1] + " rub/pcs: "
+                        + itemsInCart[i] + " pcs, " + (Integer.parseInt(productsList[i][1]) * itemsInCart[i]) + " rub");
             }
         }
-        System.out.println("Общая стоимость: " + bill);
+        System.out.println("Total cost: " + bill);
     }
 
     public void saveTxt(File textFile) {
@@ -38,8 +40,8 @@ public class Basket {
                     // количество товара берем из массива количества товара в корзине
                     // в конце строки стоимость товара
                     saveCartToFile.write((productsList[i][0] + ": " +
-                            itemsInCart[i] + " шт, " +
-                            Integer.parseInt(productsList[i][1]) * itemsInCart[i]) + " руб");
+                            itemsInCart[i] + " pcs, " +
+                            Integer.parseInt(productsList[i][1]) * itemsInCart[i]) + " rub");
                     saveCartToFile.append("\n");
                     saveCartToFile.flush();
                 }
@@ -49,22 +51,21 @@ public class Basket {
         }
     }
 
-    public static String[][] loadFromFile(File textFile) {
-        String dataFromFile = "";
+    public static Basket loadFromFile(File textFile) {
+        StringBuilder dataFromFile = new StringBuilder();
         try (BufferedReader loadCartFromFile = new BufferedReader(new FileReader(textFile))) {
             // заводим переменную для чтения из файла, т.к. при упоминании метода в скобках
             // цикла / ифа он выполняется,
             // итого без переменной у нас каждая вторая итерация цикла останется без данных
             String s;
-            while (true) {
-                if ((s = loadCartFromFile.readLine()) == null) break;
-                dataFromFile += s + "\n";
+            while ((s = loadCartFromFile.readLine()) != null) {
+                dataFromFile.append(s).append("\n");
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
         // Сначала разбиваем файл на массив построчно
-        String[] splitLines = dataFromFile.split("\\n");
+        String[] splitLines = dataFromFile.toString().split("\\n");
         // создаем двумерный массив для записи наименований и цен из файла
         String[][] productsListFromFile = new String[splitLines.length][2];
         for (int i = 0; i < splitLines.length; i++) {
@@ -72,6 +73,10 @@ public class Basket {
             productsListFromFile[i][0] = split[0];
             productsListFromFile[i][1] = split[1];
         }
-        return productsListFromFile;
+        return new Basket(productsListFromFile);
+    }
+
+    public String[][] getProductsList() {
+        return productsList;
     }
 }
